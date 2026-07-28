@@ -1,101 +1,85 @@
 :root {
-    --starbucks-green: #006241;
-    --accent-green: #00754a;
-    --light-green: #d4e9e2;
-    --house-green: #1e3932;
-
-    --warm-neutral: #f2f0eb;
-    --cool-neutral: #f9f9f9;
-    --white: #ffffff;
-    --black: #000000;
-
-    --accent: var(--starbucks-green);
-    --accent-hover: var(--accent-green);
-    --background: var(--warm-neutral);
-    --surface: var(--white);
-
-    font-family: "Arial", sans-serif;
-    font-size: 16px;
-
-}
-
+      --accent: var(--starbucks-green);
+      --accent-green: #00754a;
+      --accent-hover: var(--accent-green);
+      --background: var(--warm-neutral);
+      --black: #000000;
+      --cool-neutral: #f9f9f9;
+      --house-green: #1e3932;
+      --light-green: #d4e9e2;
+      --starbucks-green: #006241;
+      --surface: var(--white);
+      --warm-neutral: #f2f0eb;
+      --white: #ffffff;
+      font-family: "Arial", sans-serif;
+      font-size: 16px;
+  }
 form {
-    background-color: var(--warm-neutral);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-
+      align-items: center;
+      background-color: var(--warm-neutral);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: center;
+  }
 fieldset {
-    border: solid 3.5px var(--black);
-    padding: 20px;
-    border-radius: 10px;
-    background-color: var(--white);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      
-}
-
+      background-color: var(--white);
+      border: solid 3.5px var(--black);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+  }
 #formCaption {
-    
-    text-align: center;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: var(--accent);
-
-}
-
+            color: var(--accent);
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 .shiftRow {
-    display: flexbox;
-    flex-direction: column;
-    border: 2px solid var(--black);
-    background-color: var(--background);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 50px 0;
-}
-
+      background-color: var(--background);
+      border: 2px solid var(--black);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flexbox;
+      flex-direction: column;
+      margin: 50px 0;
+      padding: 20px;
+  }
 input {
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid var(--black);
-    border-radius: 5px;
-    width: 20em;
-}
+      border: 1px solid var(--black);
+      border-radius: 5px;
+      margin: 5px;
+      padding: 10px;
+      width: 20em;
+  }
 .formButtons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 2em;
-}
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 2em;
+  }
 .formButtons > button {
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px 40px;
-    margin: 10px;
-    border: 2px solid var(--black);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    background-color: var(--warm-neutral);
-    color: var(--starbucks-green);
-    cursor: pointer;
-   
-}
-
+      background-color: var(--warm-neutral);
+      border: 2px solid var(--black);
+      border-radius: 5px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+      color: var(--starbucks-green);
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px;
+      padding: 10px 40px;
+  }
 .formButtons > button[type="submit"] {
-    background-color: var(--starbucks-green);
-    color: var(--white);
-}
-
+      background-color: var(--starbucks-green);
+      color: var(--white);
+  }
 .formButtons > button[type="submit"]:hover {
-    background-color: var(--accent-hover);
-    color: var(--white);
-}
-
+      background-color: var(--accent-hover);
+      color: var(--white);
+  }
 .formButtons > button:hover {
-    background-color: var(--light-green);
-    color: var(--starbucks-green);
-}
+      background-color: var(--light-green);
+      color: var(--starbucks-green);
+  }
