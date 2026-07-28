@@ -7,10 +7,19 @@ const addShiftButton = document.getElementById("addShift");
 const removeShiftButton = document.getElementById("removeShift");
 
 function createShiftRow() {
+    // <div> and <input> elements
     const shiftDiv = document.createElement("div");
     const dateInput = document.createElement("input");
     const startTime = document.createElement("input");
     const endTime = document.createElement("input");
+
+    // Labels
+    const dateLabel = document.createElement("label");
+    const startLabel = document.createElement("label");
+    const endLabel = document.createElement("label");
+    dateLabel.textContent = "Shift Date";
+    startLabel.textContent = "Start Time";
+    endLabel.textContent = "End Time";
 
     // Date
     dateInput.setAttribute("type", "date");
@@ -18,7 +27,7 @@ function createShiftRow() {
     dateInput.setAttribute("required", "");
     dateInput.setAttribute("id", "date");
     validateNotInPast(dateInput);
-    
+
 
     // Start Time
     startTime.setAttribute("type", "time");
@@ -34,14 +43,29 @@ function createShiftRow() {
 
     shiftDiv.setAttribute("class", "shiftRow");
 
-    shiftDiv.appendChild(dateInput);
-    shiftDiv.appendChild(startTime);
-    shiftDiv.appendChild(endTime);
-    
+    /*
+     * <div class="shiftRow">
+     *      <label>
+     *          Shift Date
+     *          <input type="date">
+     *      </label>
+    */
+    dateLabel.appendChild(dateInput);
+    startLabel.appendChild(startTime);
+    endLabel.appendChild(endTime);
+
+    shiftDiv.appendChild(dateLabel);
+    shiftDiv.appendChild(startLabel);
+    shiftDiv.appendChild(endLabel);
+
     shiftFields.appendChild(shiftDiv);
 
+    addShiftButton.scrollIntoView();
+    
 
 
+
+    
 
 }
 
@@ -54,7 +78,7 @@ function removeShift() {
 }
 
 function validateNotInPast(banana) {
- 
+
     const now = new Date();
 
     const year = String(now.getFullYear());
@@ -64,7 +88,7 @@ function validateNotInPast(banana) {
     const today = `${year}-${month}-${date}`;
 
     banana.setAttribute("min", today);
-    
+
 }
 document.addEventListener("DOMContentLoaded", () => {
     createShiftRow();
