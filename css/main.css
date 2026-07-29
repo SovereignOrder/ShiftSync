@@ -44,6 +44,8 @@ fieldset {
     text-align: center;
 }
 
+
+
 .shiftRow {
     background-color: var(--background);
     border: 2px solid var(--black);
@@ -133,6 +135,14 @@ input[type="time"]::-webkit-datetime-edit {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
         }
     
         .formButtons {
