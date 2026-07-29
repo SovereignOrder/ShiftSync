@@ -6,6 +6,29 @@ const shiftRow = document.getElementsByClassName("shiftRow");
 const addShiftButton = document.getElementById("addShift");
 const removeShiftButton = document.getElementById("removeShift");
 
+const log = document.getElementById("formSubmitted");
+
+// Selecting Inputs from the Row cells
+const rows = shiftFields.querySelectorAll(".shiftRow");
+const dateInput = rows.querySelector("input[name='day']");
+const startTime = rows.querySelector("input[name='startTime']");
+const endTime = rows.querySelector("input[name='endTime']");
+
+// Shift Values | Convert Node List to Array, then into K-V pairs
+function getShiftData() {
+    const shifts = Array.from(rows, (row) => ({
+        date: row.querySelector("input[name='day']").value,
+        startTime: row.querySelector("input[name='startTime']").value,
+        endTime: row.querySelector("input[name='endTime']").value
+    }));
+
+    
+}
+
+
+    
+
+
 function createShiftRow() {
     // <div> and <input> elements
     const shiftDiv = document.createElement("div");
@@ -61,11 +84,11 @@ function createShiftRow() {
     shiftFields.appendChild(shiftDiv);
 
     addShiftButton.scrollIntoView();
-    
 
 
 
-    
+
+
 
 }
 
@@ -90,11 +113,24 @@ function validateNotInPast(banana) {
     banana.setAttribute("min", today);
 
 }
+
+
+function formSubmission(event) {
+    event.preventDefault();
+    log.textContent = "Form Submitted. Nice";
+
+    const shifts = getShiftData();
+    const scheduleJSON = JSON.stringify({shifts});
+
+
+}
 document.addEventListener("DOMContentLoaded", () => {
     createShiftRow();
+    getShiftData();
     addShiftButton.addEventListener("click", createShiftRow);
     removeShiftButton.addEventListener("click", removeShift);
 
+    form.addEventListener("submit", formSubmission);
 
 
 
