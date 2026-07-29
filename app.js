@@ -9,13 +9,12 @@ const removeShiftButton = document.getElementById("removeShift");
 const log = document.getElementById("formSubmitted");
 
 // Selecting Inputs from the Row cells
-const rows = shiftFields.querySelectorAll(".shiftRow");
-const dateInput = rows.querySelector("input[name='day']");
-const startTime = rows.querySelector("input[name='startTime']");
-const endTime = rows.querySelector("input[name='endTime']");
+
+
 
 // Shift Values | Convert Node List to Array, then into K-V pairs
 function getShiftData() {
+    const rows = shiftFields.querySelectorAll(".shiftRow");
     const shifts = Array.from(rows, (row) => ({
         date: row.querySelector("input[name='day']").value,
         startTime: row.querySelector("input[name='startTime']").value,
