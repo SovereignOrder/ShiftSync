@@ -154,7 +154,7 @@ function formatUTCICSDate(date) {
 function createICS(shifts) {
 
     const proId = "-//SovereignOrder//CalGeneration//EN"
-    const uid = String(self.crypto.randomUUID() + "@github.com/SovereignOrder");
+    
     const dtStamp = formatUTCICSDate(new Date());
 
     const lines = [
@@ -164,6 +164,7 @@ function createICS(shifts) {
     ];
 
     shifts.forEach(shift => {
+        const uid = crypto.randomUUID() + "@github.com/SovereignOrder";
         const start = formatLocalICSDate(
             shift.date,
             shift.startTime
