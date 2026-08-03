@@ -217,10 +217,10 @@ function downloadICS(icsContent) {
     downloadLink.click();
 
 
-    setTimeout(() => {
-        downloadLink.remove();
-        URL.revokeObjectURL(calendarFileURL);
-    }, 5000);
+    // setTimeout(() => {
+    //     downloadLink.remove();
+    //     URL.revokeObjectURL(calendarFileURL);
+    // }, 5000);
 
 
 
