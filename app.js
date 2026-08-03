@@ -154,7 +154,7 @@ function formatUTCICSDate(date) {
 function createICS(shifts) {
 
     const proId = "-//SovereignOrder//CalGeneration//EN"
-    
+
     const dtStamp = formatUTCICSDate(new Date());
 
     const lines = [
@@ -189,9 +189,13 @@ function createICS(shifts) {
             "SUMMARY: Work",
             "END:VEVENT",
         );
+
+        console.log(uid);
     });
 
     lines.push("END:VCALENDAR");
+
+
 
     return lines.join("\r\n");
 }
@@ -211,9 +215,13 @@ function downloadICS(icsContent) {
 
     document.body.appendChild(downloadLink);
     downloadLink.click();
-    downloadLink.remove();
 
-    URL.revokeObjectURL(calendarFileURL);
+
+    setTimeout(() => {
+        downloadLink.remove();
+        URL.revokeObjectURL(calendarFileURL);
+    }, 5000);
+
 
 
 }
