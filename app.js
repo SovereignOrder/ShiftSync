@@ -21,11 +21,10 @@ function getShiftData() {
         endTime: row.querySelector("input[name='endTime']").value
     }));
 
-    
+    return shifts;
+
+
 }
-
-
-    
 
 
 function createShiftRow() {
@@ -99,38 +98,131 @@ function removeShift() {
     }
 }
 
-function validateNotInPast(banana) {
+function validateNotInPast(dateInput) {
 
     const now = new Date();
 
     const year = String(now.getFullYear());
     const month = String(now.getMonth() + 1).padStart(2, "0");
-    const date = String(now.getDate()).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
 
-    const today = `${year}-${month}-${date}`;
+    const today = `${year}-${month}-${day}`;
 
-    banana.setAttribute("min", today);
+    dateInput.setAttribute("min", today);
 
 }
+
+
 
 
 function formSubmission(event) {
+    // console.log("test");
     event.preventDefault();
-    log.textContent = "Form Submitted. Nice";
+    // log.textContent = "Form Submitted. Nice";
 
+    // Creates JSON format
     const shifts = getShiftData();
-    const scheduleJSON = JSON.stringify({shifts});
+    const icsContent = createICS(shifts);
+    // const scheduleJSON = JSON.stringify({ shifts }, null, 2);
+    // console.log(scheduleJSON);
+
+    console.log(icsContent);
+    downloadICS(icsContent);
+
+}
+
+
+function formatLocalICSDate(date, time) {
+    const formattedDate = date.replaceAll("-", "");
+    const formattedTime = time.replace(":", "");
+
+    return `${formattedDate}T${formattedTime}00`;
 
 
 }
+
+function formatUTCICSDate(date) {
+
+
+    return date
+        .toISOString()
+        .replaceAll("-", "")
+        .replaceAll(":", "")
+        .replace(/\.\d{3}Z$/, "Z");
+}
+
+function createICS(shifts) {
+
+    const proId = "-//SovereignOrder//CalGeneration//EN"
+    const uid = String(self.crypto.randomUUID() + "@github.com/SovereignOrder");
+    const dtStamp = formatUTCICSDate(new Date());
+
+    const lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        `PRODID:${proId}`
+    ];
+
+    shifts.forEach(shift => {
+        const start = formatLocalICSDate(
+            shift.date,
+            shift.startTime
+        );
+
+        const end = formatLocalICSDate(
+            shift.date,
+            shift.endTime
+        );
+
+        // Treat end time before start time as overnight shift
+        if (end <= start) {
+            end.setDate(end.getDate() + 1);
+        }
+
+        lines.push(
+            "BEGIN:VEVENT",
+            `UID:${uid}`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${start}`,
+            `DTEND:${end}`,
+            "SUMMARY: Work",
+            "END:VEVENT",
+        );
+    });
+
+    lines.push("END:VCALENDAR");
+
+    return lines.join("\r\n");
+}
+
+function downloadICS(icsContent) {
+    const calendarFile = new Blob(
+        [icsContent],
+        {
+            type: "text/calendar;charset=utf-8"
+        });
+
+    const calendarFileURL = URL.createObjectURL(calendarFile);
+
+    const downloadLink = document.createElement("a");
+    downloadLink.setAttribute("href", calendarFileURL);
+    downloadLink.setAttribute("download", "work-schedule.ics");
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    downloadLink.remove();
+
+    URL.revokeObjectURL(calendarFileURL);
+
+
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     createShiftRow();
-    getShiftData();
+
     addShiftButton.addEventListener("click", createShiftRow);
     removeShiftButton.addEventListener("click", removeShift);
 
     form.addEventListener("submit", formSubmission);
-
-
 
 })
