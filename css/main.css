@@ -25,7 +25,7 @@ form {
     background-color: var(--warm-neutral);
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     justify-content: center;
 }
 
@@ -123,39 +123,39 @@ input[type="time"]::-webkit-datetime-edit {
 
 p {
     color: var(--black);
-    font-size: 18px;
+    font-size: 1.25em;
     font-weight: bold;
     margin: 10px 0;
     text-align: center;
 }
 
-@media (max-width: 600px) {
-        div {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            
-        }
-       
-}
-
 @media (max-width: 768px) {
-    div {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-    
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-        }
-    
-        .formButtons {
-            display: flex;
-            flex-direction: column;
-        }
+    form {
+        justify-content: flex-start;
     }
+
+    fieldset {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .shiftRow {
+        align-items: center;
+        flex-direction: column;
+        margin: 20px 0;
+    }
+
+    .formButtons {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .formButtons > button {
+        align-items: stretch;
+    }
+
+    input {
+        max-width: 100%;
+        width: 20em;
+    }
+}
