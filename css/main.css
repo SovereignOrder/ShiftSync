@@ -17,6 +17,7 @@
 
 html {
     scroll-behavior: smooth;
+    min-height: auto;
 }
 
 form {
@@ -117,6 +118,14 @@ input[type="time"]::-webkit-datetime-edit {
     font-size: 18px;
     font-weight: bold;
     font-weight: bold;
+    text-align: center;
+}
+
+p {
+    color: var(--black);
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
     text-align: center;
 }
 

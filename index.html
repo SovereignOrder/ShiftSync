@@ -4,18 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule to Calendar</title>
+    <title>ShiftSync | Enter Schedule</title>
     <link rel="stylesheet" href="css/main.css">
     <script src="app.js" defer></script>
 </head>
 
 <body>
 
-    <form id="calendarForm">
-        <fieldset>
-            <h1 id="formCaption">Enter Schedule</h1>
-            <div id="shiftFields">
-                <!-- 
+    
+    <main>
+        <form id="calendarForm">
+            <fieldset>
+                <h1 id="formCaption">Enter Schedule</h1>
+                <p>Convert your work shifts into calendar events.</p>
+                <div id="shiftFields">
+                    <!-- 
                 <div class="shiftRow">
                     <input type="date" id="date" required>
                     <input type="time" step="900" required>
@@ -23,19 +26,23 @@
                 </div> 
                 -->
 
-            </div>
+                </div>
 
-            <div class="formButtons">
-                <button type="button" id="addShift">Add Shift</button>
-                <button type="button" id="removeShift">Remove Shift</button>
-                <button type="submit">Submit</button>
-            </div>
+                <div class="formButtons">
+                    <button type="button" id="addShift">Add Shift</button>
+                    <button type="button" id="removeShift">Remove Shift</button>
+                    <button type="submit">Submit</button>
+                </div>
 
 
-        </fieldset>
-        <p id="formSubmitted"></p>
-    </form>
-    
+            </fieldset>
+            <p id="formSubmitted"></p>
+        </form>
+
+
+    </main>
+
+
 </body>
 
 </html>
