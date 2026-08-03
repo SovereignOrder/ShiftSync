@@ -216,6 +216,8 @@ function downloadICS(icsContent) {
     document.body.appendChild(downloadLink);
     downloadLink.click();
 
+    downloadLink.remove();
+    URL.revokeObjectURL(calendarFileURL);
 
     // setTimeout(() => {
     //     downloadLink.remove();
