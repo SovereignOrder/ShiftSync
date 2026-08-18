@@ -15,6 +15,29 @@
     font-size: 16px;
 }
 
+div.eventTitle {
+    color: var(--accent);
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 1em;
+    text-align: center;
+}
+
+#eventTitle {
+    border: 1px solid var(--black);
+    font-size: 1em;
+    margin: 1em;
+    text-align: center;
+}
+
+#eventTitle:focus {
+    border: 2px solid var(--accent);
+}
+#eventTitle::placeholder {
+    font-size: 0.9em;
+    opacity: 0.6;
+}
+
 html {
     scroll-behavior: smooth;
     min-height: auto;
