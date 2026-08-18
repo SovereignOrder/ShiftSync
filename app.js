@@ -5,6 +5,7 @@ const shiftFields = document.getElementById("shiftFields");
 const shiftRow = document.getElementsByClassName("shiftRow");
 const addShiftButton = document.getElementById("addShift");
 const removeShiftButton = document.getElementById("removeShift");
+const eventTitle = document.getElementById("eventTitle");
 
 const log = document.getElementById("formSubmitted");
 
@@ -186,7 +187,7 @@ function createICS(shifts) {
             `DTSTAMP:${dtStamp}`,
             `DTSTART:${start}`,
             `DTEND:${end}`,
-            "SUMMARY: Work",
+            `SUMMARY: ${eventTitle.value.trim() || "Work"}`,
             "END:VEVENT",
         );
 
@@ -211,12 +212,13 @@ function downloadICS(icsContent) {
 
     const downloadLink = document.createElement("a");
     downloadLink.setAttribute("href", calendarFileURL);
-    downloadLink.setAttribute("download", "work-schedule.ics");
+    downloadLink.setAttribute("download", "shiftsync-schedule.ics");
 
     document.body.appendChild(downloadLink);
+    
     downloadLink.click();
-
     downloadLink.remove();
+
     URL.revokeObjectURL(calendarFileURL);
 
     // setTimeout(() => {
