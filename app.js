@@ -27,6 +27,28 @@ function getShiftData() {
 
 }
 
+function isDuplicate(shift1, shift2) {
+    return (
+        shift1.date === shift2.date &&
+        shift1.startTime === shift2.startTime &&
+        shift1.endTime === shift2.endTime
+    );
+}
+
+function findDuplicateShift(shifts) {
+
+    for (let i = 0; i < shifts.length; i++) {
+        for (let j = i + 1; j < shifts.length; j++) {
+
+            if (isDuplicate(shifts[i], shifts[j])) {
+                return shifts[j];
+            }
+        }
+    }
+
+    return null; 
+}
+
 
 function createShiftRow() {
     // <div> and <input> elements
