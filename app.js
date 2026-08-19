@@ -46,7 +46,7 @@ function findDuplicateShift(shifts) {
         }
     }
 
-    return null; 
+    return null;
 }
 
 
@@ -188,30 +188,37 @@ function createICS(shifts) {
 
     shifts.forEach(shift => {
         const uid = crypto.randomUUID() + "@github.com/SovereignOrder";
+
         const start = formatLocalICSDate(
             shift.date,
             shift.startTime
         );
 
+        let endDate = shift.date;
+
+        // Treat end time before start time as overnight shift
+        if (shift.endTime <= shift.startTime) {
+            const date = new Date(shift.date);
+
+            date.setUTCDate(date.getUTCDate() + 1);
+
+            endDate = date.toISOString().split("T")[0];
+        }
+
         const end = formatLocalICSDate(
-            shift.date,
+            endDate,
             shift.endTime
         );
 
-        // Treat end time before start time as overnight shift
-        if (end <= start) {
-            end.setDate(end.getDate() + 1);
-        }
-
         lines.push(
-            "BEGIN:VEVENT",
-            `UID:${uid}`,
-            `DTSTAMP:${dtStamp}`,
-            `DTSTART:${start}`,
-            `DTEND:${end}`,
-            `SUMMARY: ${eventTitle.value.trim() || "Work"}`,
-            "END:VEVENT",
-        );
+                "BEGIN:VEVENT",
+                `UID:${uid}`,
+                `DTSTAMP:${dtStamp}`,
+                `DTSTART:${start}`,
+                `DTEND:${end}`,
+                `SUMMARY:${eventTitle.value.trim() || "Work"}`,
+                "END:VEVENT",
+            );
 
         console.log(uid);
     });
@@ -237,7 +244,7 @@ function downloadICS(icsContent) {
     downloadLink.setAttribute("download", "shiftsync-schedule.ics");
 
     document.body.appendChild(downloadLink);
-    
+
     downloadLink.click();
     downloadLink.remove();
 
