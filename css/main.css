@@ -180,7 +180,8 @@ p {
     }
 
     .shiftRow input {
-        box-sizing: border-box;
+        align-self: stretch;
+        width: auto;
     }
 
 
