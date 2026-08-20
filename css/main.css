@@ -177,6 +177,10 @@ p {
         max-width: 100%;
     }
 
+    .shiftRow input {
+        box-sizing: border-box;
+    }
+
 
     .formButtons {
         align-items: stretch;
