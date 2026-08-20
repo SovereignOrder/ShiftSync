@@ -84,7 +84,6 @@ fieldset {
 input {
     border: 1px solid var(--black);
     border-radius: 5px;
-    margin: 5px;
     padding: 10px;
     width: 20em;
 }
