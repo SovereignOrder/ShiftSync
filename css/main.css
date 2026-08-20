@@ -192,6 +192,9 @@ p {
     }
 
     input {
+        box-sizing: border-box;
+        margin: 0;
+        max-width: 100%;
         width: 100%;
     }
 }
