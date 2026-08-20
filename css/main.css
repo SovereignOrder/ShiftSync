@@ -84,6 +84,7 @@ fieldset {
 input {
     border: 1px solid var(--black);
     border-radius: 5px;
+    box-sizing: border-box;
     padding: 10px;
     width: 20em;
 }
@@ -193,9 +194,6 @@ p {
     }
 
     input {
-        box-sizing: border-box;
-        margin: 0;
-        max-width: 100%;
         width: 100%;
     }
 }
