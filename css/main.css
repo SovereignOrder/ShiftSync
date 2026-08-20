@@ -181,6 +181,12 @@ p {
         max-width: 100%;
     }
 
+    .shiftRow input[type="date"],
+    .shiftRow input[type="time"] {
+        width: auto;
+        min-width: 0;
+    }
+
 
     .formButtons {
         align-items: stretch;
