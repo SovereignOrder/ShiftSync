@@ -106,7 +106,42 @@ function createShiftRow() {
 
     addShiftButton.scrollIntoView();
 
+    // Temporary layout debugging
+    const oldDebug = document.getElementById("layoutDebug");
 
+    if (oldDebug) {
+        oldDebug.remove();
+    }
+
+    const debug = document.createElement("pre");
+    debug.setAttribute("id", "layoutDebug");
+
+    const inputs = document.querySelectorAll(".shiftRow input");
+    const labels = document.querySelectorAll(".shiftRow > label");
+
+    let output = "";
+
+    inputs.forEach((input, i) => {
+        const inputRect = input.getBoundingClientRect();
+        const labelRect = labels[i].getBoundingClientRect();
+
+        output += `
+Field ${i + 1}
+Label:
+width = ${labelRect.width}
+left = ${labelRect.left}
+right = ${labelRect.right}
+
+Input:
+width = ${inputRect.width}
+left = ${inputRect.left}
+right = ${inputRect.right}
+
+`;
+    });
+
+    debug.textContent = output;
+    document.body.appendChild(debug);
 
 
 
@@ -135,10 +170,54 @@ function validateNotInPast(dateInput) {
 
 }
 
+function showLayoutDebug() {
+    const row = document.querySelector(".shiftRow");
+    const labels = [...document.querySelectorAll(".shiftRow > label")];
 
+    const rowRect = row.getBoundingClientRect();
+    const rowCenter = (rowRect.left + rowRect.right) / 2;
+
+    let output = `
+Viewport: ${window.innerWidth}
+
+ROW
+left: ${rowRect.left.toFixed(1)}
+right: ${rowRect.right.toFixed(1)}
+width: ${rowRect.width.toFixed(1)}
+center: ${rowCenter.toFixed(1)}
+`;
+
+    labels.forEach((label, i) => {
+        const input = label.querySelector("input");
+
+        const labelRect = label.getBoundingClientRect();
+        const inputRect = input.getBoundingClientRect();
+
+        output += `
+
+FIELD ${i + 1}
+
+Label:
+left: ${labelRect.left.toFixed(1)}
+right: ${labelRect.right.toFixed(1)}
+center: ${((labelRect.left + labelRect.right) / 2).toFixed(1)}
+
+Input:
+left: ${inputRect.left.toFixed(1)}
+right: ${inputRect.right.toFixed(1)}
+center: ${((inputRect.left + inputRect.right) / 2).toFixed(1)}
+`;
+    });
+
+    const debug = document.createElement("pre");
+    debug.textContent = output;
+
+    document.body.appendChild(debug);
+}
 
 
 function formSubmission(event) {
+
     // console.log("test");
     event.preventDefault();
     // log.textContent = "Form Submitted. Nice";
@@ -211,14 +290,14 @@ function createICS(shifts) {
         );
 
         lines.push(
-                "BEGIN:VEVENT",
-                `UID:${uid}`,
-                `DTSTAMP:${dtStamp}`,
-                `DTSTART:${start}`,
-                `DTEND:${end}`,
-                `SUMMARY:${eventTitle.value.trim() || "Work"}`,
-                "END:VEVENT",
-            );
+            "BEGIN:VEVENT",
+            `UID:${uid}`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${start}`,
+            `DTEND:${end}`,
+            `SUMMARY:${eventTitle.value.trim() || "Work"}`,
+            "END:VEVENT",
+        );
 
         console.log(uid);
     });
@@ -261,6 +340,8 @@ function downloadICS(icsContent) {
 
 document.addEventListener("DOMContentLoaded", () => {
     createShiftRow();
+
+    showLayoutDebug();
 
     addShiftButton.addEventListener("click", createShiftRow);
     removeShiftButton.addEventListener("click", removeShift);
