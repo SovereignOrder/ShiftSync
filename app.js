@@ -153,6 +153,8 @@ center: ${rowCenter.toFixed(1)}
         const labelRect = label.getBoundingClientRect();
         const inputRect = input.getBoundingClientRect();
 
+        const style = getComputedStyle(input);
+
         output += `
 
 FIELD ${i + 1}
@@ -160,16 +162,35 @@ FIELD ${i + 1}
 Label:
 left: ${labelRect.left.toFixed(1)}
 right: ${labelRect.right.toFixed(1)}
+width: ${labelRect.width.toFixed(1)}
 center: ${((labelRect.left + labelRect.right) / 2).toFixed(1)}
 
 Input:
 left: ${inputRect.left.toFixed(1)}
 right: ${inputRect.right.toFixed(1)}
+width: ${inputRect.width.toFixed(1)}
 center: ${((inputRect.left + inputRect.right) / 2).toFixed(1)}
+
+CSS:
+box-sizing: ${style.boxSizing}
+computed width: ${style.width}
+padding-left: ${style.paddingLeft}
+padding-right: ${style.paddingRight}
+border-left: ${style.borderLeftWidth}
+border-right: ${style.borderRightWidth}
+margin-left: ${style.marginLeft}
+margin-right: ${style.marginRight}
 `;
     });
 
+    const oldDebug = document.getElementById("layoutDebug");
+
+    if (oldDebug) {
+        oldDebug.remove();
+    }
+
     const debug = document.createElement("pre");
+    debug.setAttribute("id", "layoutDebug");
     debug.textContent = output;
 
     document.body.appendChild(debug);
