@@ -31,7 +31,7 @@ div.eventTitle {
 }
 
 #eventTitle:focus {
-    border: 2px solid var(--accent);
+    border: 1px solid var(--accent);
 }
 #eventTitle::placeholder {
     font-size: 0.9em;
@@ -157,6 +157,12 @@ p {
         justify-content: flex-start;
     }
 
+    div.eventTitle {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
     fieldset {
         box-sizing: border-box;
         width: 100%;
@@ -165,8 +171,13 @@ p {
     .shiftRow {
         align-items: center;
         flex-direction: column;
-        margin: 20px 0;
     }
+
+    .shiftRow>label {
+        width: 15em;
+        max-width: 100%;
+    }
+
 
     .formButtons {
         align-items: stretch;
@@ -178,7 +189,6 @@ p {
     }
 
     input {
-        max-width: 100%;
-        width: 20em;
+        width: 100%;
     }
 }
