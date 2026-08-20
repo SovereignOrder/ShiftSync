@@ -106,11 +106,6 @@ function createShiftRow() {
 
     addShiftButton.scrollIntoView();
 
-
-
-
-
-
 }
 
 function removeShift() {
@@ -135,10 +130,75 @@ function validateNotInPast(dateInput) {
 
 }
 
+function showLayoutDebug() {
+    const row = document.querySelector(".shiftRow");
+    const labels = [...document.querySelectorAll(".shiftRow > label")];
 
+    const rowRect = row.getBoundingClientRect();
+    const rowCenter = (rowRect.left + rowRect.right) / 2;
+
+    let output = `
+Viewport: ${window.innerWidth}
+
+ROW
+left: ${rowRect.left.toFixed(1)}
+right: ${rowRect.right.toFixed(1)}
+width: ${rowRect.width.toFixed(1)}
+center: ${rowCenter.toFixed(1)}
+`;
+
+    labels.forEach((label, i) => {
+        const input = label.querySelector("input");
+
+        const labelRect = label.getBoundingClientRect();
+        const inputRect = input.getBoundingClientRect();
+
+        const style = getComputedStyle(input);
+
+        output += `
+
+FIELD ${i + 1}
+
+Label:
+left: ${labelRect.left.toFixed(1)}
+right: ${labelRect.right.toFixed(1)}
+width: ${labelRect.width.toFixed(1)}
+center: ${((labelRect.left + labelRect.right) / 2).toFixed(1)}
+
+Input:
+left: ${inputRect.left.toFixed(1)}
+right: ${inputRect.right.toFixed(1)}
+width: ${inputRect.width.toFixed(1)}
+center: ${((inputRect.left + inputRect.right) / 2).toFixed(1)}
+
+CSS:
+box-sizing: ${style.boxSizing}
+computed width: ${style.width}
+padding-left: ${style.paddingLeft}
+padding-right: ${style.paddingRight}
+border-left: ${style.borderLeftWidth}
+border-right: ${style.borderRightWidth}
+margin-left: ${style.marginLeft}
+margin-right: ${style.marginRight}
+`;
+    });
+
+    const oldDebug = document.getElementById("layoutDebug");
+
+    if (oldDebug) {
+        oldDebug.remove();
+    }
+
+    const debug = document.createElement("pre");
+    debug.setAttribute("id", "layoutDebug");
+    debug.textContent = output;
+
+    document.body.appendChild(debug);
+}
 
 
 function formSubmission(event) {
+
     // console.log("test");
     event.preventDefault();
     // log.textContent = "Form Submitted. Nice";
@@ -211,14 +271,14 @@ function createICS(shifts) {
         );
 
         lines.push(
-                "BEGIN:VEVENT",
-                `UID:${uid}`,
-                `DTSTAMP:${dtStamp}`,
-                `DTSTART:${start}`,
-                `DTEND:${end}`,
-                `SUMMARY:${eventTitle.value.trim() || "Work"}`,
-                "END:VEVENT",
-            );
+            "BEGIN:VEVENT",
+            `UID:${uid}`,
+            `DTSTAMP:${dtStamp}`,
+            `DTSTART:${start}`,
+            `DTEND:${end}`,
+            `SUMMARY:${eventTitle.value.trim() || "Work"}`,
+            "END:VEVENT",
+        );
 
         console.log(uid);
     });
@@ -261,6 +321,11 @@ function downloadICS(icsContent) {
 
 document.addEventListener("DOMContentLoaded", () => {
     createShiftRow();
+
+    setTimeout(() => {
+        showLayoutDebug();
+    }, 500)
+
 
     addShiftButton.addEventListener("click", createShiftRow);
     removeShiftButton.addEventListener("click", removeShift);
