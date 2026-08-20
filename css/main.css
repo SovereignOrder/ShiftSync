@@ -176,12 +176,6 @@ p {
     .shiftRow>label {
         width: 15em;
         max-width: 100%;
-        margin-inline: auto;
-    }
-
-    .shiftRow input {
-        align-self: stretch;
-        width: auto;
     }
 
 
