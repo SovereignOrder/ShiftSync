@@ -106,46 +106,6 @@ function createShiftRow() {
 
     addShiftButton.scrollIntoView();
 
-    // Temporary layout debugging
-    const oldDebug = document.getElementById("layoutDebug");
-
-    if (oldDebug) {
-        oldDebug.remove();
-    }
-
-    const debug = document.createElement("pre");
-    debug.setAttribute("id", "layoutDebug");
-
-    const inputs = document.querySelectorAll(".shiftRow input");
-    const labels = document.querySelectorAll(".shiftRow > label");
-
-    let output = "";
-
-    inputs.forEach((input, i) => {
-        const inputRect = input.getBoundingClientRect();
-        const labelRect = labels[i].getBoundingClientRect();
-
-        output += `
-Field ${i + 1}
-Label:
-width = ${labelRect.width}
-left = ${labelRect.left}
-right = ${labelRect.right}
-
-Input:
-width = ${inputRect.width}
-left = ${inputRect.left}
-right = ${inputRect.right}
-
-`;
-    });
-
-    debug.textContent = output;
-    document.body.appendChild(debug);
-
-
-
-
 }
 
 function removeShift() {
@@ -341,7 +301,10 @@ function downloadICS(icsContent) {
 document.addEventListener("DOMContentLoaded", () => {
     createShiftRow();
 
-    showLayoutDebug();
+    setTimeout(() => {
+        showLayoutDebug();
+    }, 500)
+
 
     addShiftButton.addEventListener("click", createShiftRow);
     removeShiftButton.addEventListener("click", removeShift);
