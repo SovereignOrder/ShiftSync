@@ -36,11 +36,14 @@ function isDuplicate(shift1, shift2) {
 }
 
 function findDuplicateShift(shifts) {
+    const rows = document.querySelectorAll(".shiftRow");
 
     for (let i = 0; i < shifts.length; i++) {
         for (let j = i + 1; j < shifts.length; j++) {
 
             if (isDuplicate(shifts[i], shifts[j])) {
+                rows[i].classList.add("duplicateShift");
+                rows[j].classList.add("duplicateShift");
                 return shifts[j];
             }
         }
@@ -205,12 +208,23 @@ function formSubmission(event) {
 
     // Creates JSON format
     const shifts = getShiftData();
-    const icsContent = createICS(shifts);
+    const duplicate = findDuplicateShift(shifts);
+
+    if (duplicate) {
+
+
+        return;
+    }
+
+
     // const scheduleJSON = JSON.stringify({ shifts }, null, 2);
     // console.log(scheduleJSON);
+    const icsContent = createICS(shifts);
 
     console.log(icsContent);
     downloadICS(icsContent);
+
+
 
 }
 
@@ -318,17 +332,29 @@ function downloadICS(icsContent) {
 
 
 }
+// When the user corrects their duplicate, it removes the red border
+// Event Propagation 
+shiftFields.addEventListener("change", () => {
+    const duplicateRows = document.querySelectorAll(".duplicateShift");
+    
+    duplicateRows.forEach(row => {
+        row.classList.remove("duplicateShift");
+    })
+
+})
 
 document.addEventListener("DOMContentLoaded", () => {
     createShiftRow();
 
-    setTimeout(() => {
-        showLayoutDebug();
-    }, 500)
+    // setTimeout(() => {
+    //     showLayoutDebug();
+    // }, 500)
 
 
     addShiftButton.addEventListener("click", createShiftRow);
     removeShiftButton.addEventListener("click", removeShift);
+
+
 
     form.addEventListener("submit", formSubmission);
 
