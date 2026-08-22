@@ -211,8 +211,6 @@ function formSubmission(event) {
     const duplicate = findDuplicateShift(shifts);
 
     if (duplicate) {
-
-
         return;
     }
 
@@ -336,10 +334,15 @@ function downloadICS(icsContent) {
 // Event Propagation 
 shiftFields.addEventListener("change", () => {
     const duplicateRows = document.querySelectorAll(".duplicateShift");
+    const shifts = getShiftData();
     
     duplicateRows.forEach(row => {
         row.classList.remove("duplicateShift");
     })
+
+    findDuplicateShift(shifts);
+
+
 
 })
 
