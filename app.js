@@ -292,7 +292,6 @@ function createICS(shifts) {
             "END:VEVENT",
         );
 
-        console.log(uid);
     });
 
     lines.push("END:VCALENDAR");
