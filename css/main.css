@@ -193,6 +193,11 @@ p {
         max-width: 100%;
     }
 
+    /* 
+     iOS native date/time controls can miscalculate width: 100%
+     when padding is applied. See WebKit Bug 301648. 
+     https://bugs.webkit.org/show_bug.cgi?id=301648
+   */
     .shiftRow input[type="date"],
     .shiftRow input[type="time"] {
         width: auto;
