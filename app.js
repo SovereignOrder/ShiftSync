@@ -9,9 +9,12 @@ const eventTitle = document.getElementById("eventTitle");
 
 const log = document.getElementById("formSubmitted");
 
-// Selecting Inputs from the Row cells
-
-
+async function recognizeImage() {
+    const worker = await Tesseract.createWorker('eng');
+    const { data: { text } } = await worker.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png');
+    console.log(text);
+    await worker.terminate();
+}
 
 // Shift Values | Convert Node List to Array, then into K-V pairs
 function getShiftData() {
@@ -334,7 +337,7 @@ function downloadICS(icsContent) {
 shiftFields.addEventListener("change", () => {
     const duplicateRows = document.querySelectorAll(".duplicateShift");
     const shifts = getShiftData();
-    
+
     duplicateRows.forEach(row => {
         row.classList.remove("duplicateShift");
     })
@@ -346,6 +349,7 @@ shiftFields.addEventListener("change", () => {
 })
 
 document.addEventListener("DOMContentLoaded", () => {
+    recognizeImage();
     createShiftRow();
 
     // setTimeout(() => {
