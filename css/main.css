@@ -147,8 +147,7 @@ input[type="time"]::-webkit-datetime-edit {
     padding: 20px;
 
 }
-
-.shiftRow>label {
+div>label {
     color: var(--accent);
     display: flex;
     flex-direction: column;
@@ -158,6 +157,16 @@ input[type="time"]::-webkit-datetime-edit {
     font-weight: bold;
     text-align: center;
 }
+/* .shiftRow>label {
+    color: var(--accent);
+    display: flex;
+    flex-direction: column;
+    font-size: 2em;
+    font-size: 18px;
+    font-weight: bold;
+    font-weight: bold;
+    text-align: center;
+} */
 
 p {
     color: var(--black);

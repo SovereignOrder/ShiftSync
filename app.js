@@ -6,14 +6,62 @@ const shiftRow = document.getElementsByClassName("shiftRow");
 const addShiftButton = document.getElementById("addShift");
 const removeShiftButton = document.getElementById("removeShift");
 const eventTitle = document.getElementById("eventTitle");
+const scheduleImage = document.getElementById("scheduleImage");
+const clearImageButton = document.getElementById("clearImage");
 
 const log = document.getElementById("formSubmitted");
 
-async function recognizeImage() {
-    const worker = await Tesseract.createWorker('eng');
-    const { data: { text } } = await worker.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png');
+async function recognizeImage(image) {
+    console.log("IMAGE:", image);
+    console.log("TYPE:", image.type);
+    console.log("Creating worker...");
+
+    const worker = await Tesseract.createWorker("eng");
+
+    console.log("Worker created");
+    console.log("Starting image recognition...");
+
+    const { data: { text } } = await worker.recognize(image);
+
+    console.log("Recognition finished");
+
     console.log(text);
+
     await worker.terminate();
+
+    return text;
+}
+
+async function getImageText() {
+    let text = [];
+    for (const image of scheduleImage.files) {
+        const imageText = await recognizeImage(image);
+        text.push(imageText);
+
+    }
+    const combinedText = text.join("\n");
+    parseImageText(combinedText);
+
+
+
+}
+
+function parseImageText(text) {
+    const shiftDateRegex = /\d{1,2}\/\d{1,2}\/\d{4}/;
+    const timeRegex = /(?<startTime>\d{2}:\d{2}\s?[AP]M)\s*-\s*(?<endTime>\d{2}:\d{2}\s?[AP]M)/gi;
+    const dayRegex = /\b(?<day>Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/gi;
+
+    const matches = text.matchAll(timeRegex);
+
+    for (const match of matches) {
+        console.log(match.groups.startTime);
+        console.log(match.groups.endTime);
+    }
+
+    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+    
+
 }
 
 // Shift Values | Convert Node List to Array, then into K-V pairs
@@ -348,15 +396,20 @@ shiftFields.addEventListener("change", () => {
 
 })
 
+clearImageButton.addEventListener("click", () => {
+    scheduleImage.value = "";
+});
+
+
 document.addEventListener("DOMContentLoaded", () => {
-    recognizeImage();
     createShiftRow();
+
 
     // setTimeout(() => {
     //     showLayoutDebug();
     // }, 500)
 
-
+    scheduleImage.addEventListener("change", getImageText);
     addShiftButton.addEventListener("click", createShiftRow);
     removeShiftButton.addEventListener("click", removeShift);
 
