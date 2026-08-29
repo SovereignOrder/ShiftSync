@@ -47,20 +47,23 @@ async function getImageText() {
 }
 
 function parseImageText(text) {
-    const shiftDateRegex = /\d{1,2}\/\d{1,2}\/\d{4}/;
-    const timeRegex = /(?<startTime>\d{2}:\d{2}\s?[AP]M)\s*-\s*(?<endTime>\d{2}:\d{2}\s?[AP]M)/gi;
-    const dayRegex = /\b(?<day>Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/gi;
+    // const timeRegex = /(?<startTime>\d{2}:\d{2}\s?[AP]M)\s*-\s*(?<endTime>\d{2}:\d{2}\s?[AP]M)/gi;
+    // const dayRegex = /\b(?<day>Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/gi;
+    const startOfWeekRegex = /\d{1,2}\/\d{1,2}\/\d{4}/;
+    const findShiftRegex = /(?<day>Mon|Tue|Wed|Thu|Fri|Sat|Sun)[^\n]*?(?<startTime>\d{2}:\d{2}\s?[AP]M)\s*-\s*(?<endTime>\d{2}:\d{2}\s?[AP]M)/gi;
 
-    const matches = text.matchAll(timeRegex);
+
+    const matches = text.matchAll(findShiftRegex);
 
     for (const match of matches) {
+        console.log(match.groups.day);
         console.log(match.groups.startTime);
         console.log(match.groups.endTime);
     }
 
     const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-    
+
 
 }
 
