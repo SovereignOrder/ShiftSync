@@ -53,18 +53,32 @@ function parseImageText(text) {
     const findShiftRegex = /(?<day>Mon|Tue|Wed|Thu|Fri|Sat|Sun)[^\n]*?(?<startTime>\d{2}:\d{2}\s?[AP]M)\s*-\s*(?<endTime>\d{2}:\d{2}\s?[AP]M)/gi;
 
 
-    const matches = text.matchAll(findShiftRegex);
+    const shiftMatches = Array.from(text.matchAll(findShiftRegex));
+    const startOfWeekMatch = text.match(startOfWeekRegex);
+    const startOfWeekDate = startOfWeekMatch[0];
+    const [month, day, year] = startOfWeekDate.split("/");
+    const startOfWeekUTCDateObject = new Date(Date.UTC(year, month - 1, day))
 
-    for (const match of matches) {
-        console.log(match.groups.day);
-        console.log(match.groups.startTime);
-        console.log(match.groups.endTime);
-    }
+    console.log(startOfWeekDate); //08/17/2026
+    console.log(startOfWeekUTCDateObject.toISOString().split("T")[0]); //2026-08-17
 
     const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+    console.log("Days Working");
+    for (const shiftMatch of shiftMatches) {
+        const shiftDate = new Date(startOfWeekUTCDateObject);
+        shiftDate.setUTCDate(shiftDate.getUTCDate() 
+            + days.indexOf(shiftMatch.groups.day))
 
+        const shift = {
+            date: shiftDate.toISOString().split("T")[0],
+            startTime: shiftMatch.groups.startTime,
+            endTime: shiftMatch.groups.endTime
+        }
 
+        console.log(shift);
+
+    }
 }
 
 // Shift Values | Convert Node List to Array, then into K-V pairs
