@@ -45,6 +45,19 @@ async function getImageText() {
 
 
 }
+// 05:00 PM
+function convertTo24Hour(time) {
+    const [timePart, period] = time.split(" ");
+    let [hour, minute] = timePart.split(":").map(Number);
+
+    if (period === "AM") {
+        hour = (hour === 12) ? 0 : hour;
+    } else {
+        hour = (hour === 12) ? 12 : hour + 12;
+    }
+
+    return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+}
 
 function parseImageText(text) {
     // const timeRegex = /(?<startTime>\d{2}:\d{2}\s?[AP]M)\s*-\s*(?<endTime>\d{2}:\d{2}\s?[AP]M)/gi;
@@ -72,8 +85,8 @@ function parseImageText(text) {
 
         const shift = {
             date: shiftDate.toISOString().split("T")[0],
-            startTime: shiftMatch.groups.startTime,
-            endTime: shiftMatch.groups.endTime
+            startTime: convertTo24Hour(shiftMatch.groups.startTime),
+            endTime: convertTo24Hour(shiftMatch.groups.endTime)
         }
 
         console.log(shift);
